@@ -27,6 +27,24 @@ public class UserService {
                         new UserNotFoundExcepiton
                                 ("User with id: " + id + " was not found."));
     }
+
+    public User findUserByUsername(String username)
+    {
+        return userRepository.findUserByUsername(username)
+                .orElseThrow(() ->
+                        new UserNotFoundExcepiton
+                                ("User with username: " + username + " was not found."));
+    }
+
+    public String findPasswordByUsername(String username)
+    {
+        User user = userRepository.findUserByUsername(username)
+                .orElseThrow(() ->
+                        new UserNotFoundExcepiton
+                                ("User with username: " + username + " was not found."));
+        return user.getPassword();
+
+    }
     public void deleteUser(Long id)
     {
         userRepository.deleteUserById(id);
