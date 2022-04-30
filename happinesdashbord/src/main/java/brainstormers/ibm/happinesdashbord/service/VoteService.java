@@ -14,8 +14,14 @@ public class VoteService {
         this.voteRepository = voteRepository;
     }
 
-    public Collection<Vote> findVotesByPollId(Long id)
+    public Vote addVote(Vote vote) {return voteRepository.save(vote);}
+
+    public Vote updateVote(Vote vote) {return voteRepository.save(vote);}
+
+    public Collection<Vote> findVotesByPollId(Long poolId)
     {
-        return voteRepository.findVoteByPollId(id);
+        return voteRepository.findVoteByPollId(poolId);
     }
+
+    public void deleteVoteById(Long id) {voteRepository.deteleVoteById(id);}
 }

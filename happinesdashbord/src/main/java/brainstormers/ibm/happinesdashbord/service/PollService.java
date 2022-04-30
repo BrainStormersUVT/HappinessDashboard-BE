@@ -16,6 +16,10 @@ public class PollService {
         this.pollRepository = pollRepository;
     }
 
+    public Poll addPoll(Poll poll) { return pollRepository.save(poll);}
+
+    public Poll updatePoll(Poll poll) {return pollRepository.save(poll);};
+
     public Poll findPollById(Long id)
     {
         return pollRepository.findPollById(id)
@@ -35,5 +39,7 @@ public class PollService {
 
         return poolList.subList(0, 3);
     }
+
+    public void deletePollById(Long id) {pollRepository.deletePollById(id);};
 
 }

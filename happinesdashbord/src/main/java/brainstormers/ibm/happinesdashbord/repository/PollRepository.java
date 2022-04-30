@@ -20,4 +20,5 @@ public interface PollRepository extends JpaRepository<Poll, Long> {
 
     Optional<Poll> findPollById(Long id);
 
+    void deletePollById(Long id);
 }
