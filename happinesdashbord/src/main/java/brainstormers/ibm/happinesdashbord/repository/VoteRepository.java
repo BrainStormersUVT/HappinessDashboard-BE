@@ -1,6 +1,5 @@
 package brainstormers.ibm.happinesdashbord.repository;
 
-import brainstormers.ibm.happinesdashbord.model.User;
 import brainstormers.ibm.happinesdashbord.model.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,9 +10,9 @@ import java.util.Collection;
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     @Query(
-            value = "SELECT * FROM Vote WHERE poll_id = :id ORDER BY datetime DESC",
+            value = "SELECT * FROM Vote WHERE poll_id = :poolId ORDER BY datetime DESC",
             nativeQuery = true)
-    Collection<Vote> findVoteByPollId(@Param("id") Long id);
+    Collection<Vote> findVoteByPollId(@Param("poolId") Long poolId);
 
-    void deteleVoteById(Long id);
+    void deleteVoteById(Long id);
 }

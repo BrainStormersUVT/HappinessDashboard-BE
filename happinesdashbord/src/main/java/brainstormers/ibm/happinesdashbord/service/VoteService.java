@@ -23,5 +23,5 @@ public class VoteService {
         return voteRepository.findVoteByPollId(poolId);
     }
 
-    public void deleteVoteById(Long id) {voteRepository.deteleVoteById(id);}
+    public void deleteVoteById(Long id) {voteRepository.deleteVoteById(id);}
 }

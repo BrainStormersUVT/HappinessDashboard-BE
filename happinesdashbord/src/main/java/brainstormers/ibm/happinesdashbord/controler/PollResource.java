@@ -1,13 +1,11 @@
 package brainstormers.ibm.happinesdashbord.controler;
 
-import brainstormers.ibm.happinesdashbord.exception.PollNotFoundException;
 import brainstormers.ibm.happinesdashbord.model.Poll;
 import brainstormers.ibm.happinesdashbord.service.PollService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController

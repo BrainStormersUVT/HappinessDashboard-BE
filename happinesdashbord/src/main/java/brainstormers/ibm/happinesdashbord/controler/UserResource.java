@@ -1,6 +1,5 @@
 package brainstormers.ibm.happinesdashbord.controler;
 
-import brainstormers.ibm.happinesdashbord.exception.UserNotFoundExcepiton;
 import brainstormers.ibm.happinesdashbord.model.User;
 import brainstormers.ibm.happinesdashbord.service.UserService;
 import org.springframework.http.HttpStatus;
