@@ -37,6 +37,7 @@ public class PollResource {
     }
 
     @GetMapping("/findAll")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Collection<Poll>> getListOfPools()
     {
         Collection<Poll> pollCollection = pollService.getListOfPools();
