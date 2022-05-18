@@ -18,18 +18,21 @@ public class PollResource {
     }
 
     @PostMapping("/add")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Poll> addPoll(@RequestBody Poll poll) {
         Poll newPoll= pollService.addPoll(poll);
         return new ResponseEntity<Poll>(newPoll, HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Poll> updatePoll(@RequestBody Poll poll) {
         Poll updatePoll = pollService.updatePoll(poll);
         return new ResponseEntity<Poll>(updatePoll, HttpStatus.OK);
     };
 
     @GetMapping("/find/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Poll> findPollById(@PathVariable("id") Long id)
     {
         Poll poll = pollService.findPollById(id);
@@ -44,6 +47,7 @@ public class PollResource {
     }
 
     @GetMapping("/findLatest")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Collection<Poll>> getListOfLatestPools()
     {
         Collection<Poll> pollCollection = pollService.getListOfLatestPools();
@@ -51,6 +55,7 @@ public class PollResource {
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> deletePollById(@PathVariable("id") Long id) {
         pollService.deletePollById(id);
         return new ResponseEntity<>(HttpStatus.OK);

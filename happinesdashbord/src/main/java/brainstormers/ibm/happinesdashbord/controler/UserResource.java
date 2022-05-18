@@ -16,6 +16,7 @@ public class UserResource {
     }
 
     @PostMapping("/add")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<User> addUser(@RequestBody User user)
     {
         User newUser = userService.addUser(user);
@@ -23,6 +24,7 @@ public class UserResource {
     }
 
     @PutMapping("/update")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<User> updateUser(@RequestBody User user)
     {
         User updatedUser = userService.updateUser(user);
@@ -30,6 +32,7 @@ public class UserResource {
     }
 
     @GetMapping("/find/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<User> findUserById(@PathVariable("id") Long id)
     {
         User user = userService.findUserById(id);
@@ -37,6 +40,7 @@ public class UserResource {
     }
 
     @GetMapping("/find/{username}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<User> findUserByUsername(@PathVariable("username") String username)
     {
         User user =   userService.findUserByUsername(username);
@@ -44,6 +48,7 @@ public class UserResource {
     }
 
     @GetMapping("/find/{username}/password")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<String> findPasswordByUsername(@PathVariable("username") String username)
     {
         String password = userService.findPasswordByUsername(username);
@@ -51,6 +56,7 @@ public class UserResource {
     }
 
     @DeleteMapping("/delete/{id}")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id)
     {
         userService.deleteUserById(id);
