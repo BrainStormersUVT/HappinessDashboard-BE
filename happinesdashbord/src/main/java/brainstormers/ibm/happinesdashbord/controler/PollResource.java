@@ -29,7 +29,7 @@ public class PollResource {
     public ResponseEntity<Poll> updatePoll(@RequestBody Poll poll) {
         Poll updatePoll = pollService.updatePoll(poll);
         return new ResponseEntity<Poll>(updatePoll, HttpStatus.OK);
-    };
+    }
 
     @GetMapping("/find/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
@@ -40,6 +40,7 @@ public class PollResource {
     }
 
     @GetMapping("/findAll")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Collection<Poll>> getListOfPools()
     {
         Collection<Poll> pollCollection = pollService.getListOfPools();
