@@ -6,6 +6,8 @@ import brainstormers.ibm.happinesdashbord.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class UserService {
     private final UserRepository userRepository;
@@ -23,12 +25,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findUserById(Long id)
+    public Long findUserById(Long id)
     {
-        return userRepository.findUserById(id)
-                .orElseThrow(() ->
-                        new UserNotFoundExcepiton
-                                ("User with id: " + id + " was not found."));
+        if(userRepository.findUserById(id).isPresent())
+            return id;
+        else
+            return -1L;
     }
 
     public User findUserByUsername(String username)
@@ -47,6 +49,16 @@ public class UserService {
                                 ("User with username: " + username + " was not found."));
         return user.getPassword();
 
+    }
+
+    public Boolean checkIfUserVoted(Integer idPoll, String username)
+    {
+        Optional<User> user = userRepository.checkIfUserVoted(idPoll, username);
+
+        if(user.isPresent())
+            return true;
+        else
+            return false;
     }
     public void deleteUserById(Long id)
     {

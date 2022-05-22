@@ -6,7 +6,7 @@ import java.util.Date;
 
 @Entity
 @Table(name = "Vote", uniqueConstraints = {
-        @UniqueConstraint(name = "uc_vote_cookie", columnNames = {"cookie", "id"})
+        @UniqueConstraint(name = "uc_vote_cookie", columnNames = {"user_id", "id"})
 })
 public class Vote implements Serializable {
     @Id
@@ -22,8 +22,9 @@ public class Vote implements Serializable {
     @Column(nullable = false)
     private Date datetime;
 
-    @Column(nullable = false)
-    private Long cookie;
+    @ManyToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @ManyToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
     @JoinColumn(name = "poll_id")
@@ -33,11 +34,11 @@ public class Vote implements Serializable {
 
     }
 
-    public Vote(Short grade, String comment, Date datetime, Long cookie, Poll poll) {
+    public Vote(Short grade, String comment, Date datetime, User user, Poll poll) {
         this.grade = grade;
         this.comment = comment;
         this.datetime = datetime;
-        this.cookie = cookie;
+        this.user = user;
         this.poll = poll;
     }
 
@@ -77,13 +78,9 @@ public class Vote implements Serializable {
         this.datetime = datetime;
     }
 
-    public Long getCookie() {
-        return cookie;
-    }
+    public User getUser() { return user; }
 
-    public void setCookie(Long cookie) {
-        this.cookie = cookie;
-    }
+    public void setUser(User user) { this.user = user; }
 
     public void setPoll(Poll poll) {
         this.poll = poll;
@@ -95,7 +92,6 @@ public class Vote implements Serializable {
                 "grade=" + grade +
                 ", comment='" + comment + '\'' +
                 ", datetime=" + datetime +
-                ", cookie=" + cookie +
                 ", poll=" + poll +
                 '}';
     }

@@ -40,6 +40,19 @@ public class PollService {
         return poolList.subList(0, 3);
     }
 
+    public Collection<Poll> getPollsByUsername(String username)
+    {
+        ArrayList<Poll> poolList = new ArrayList<Poll>(pollRepository.findPoolsByUsername(username));
+
+        return poolList;
+    }
+
+    public Collection<Poll> getPollsByTitle(String title)
+    {
+        ArrayList<Poll> poolList = new ArrayList<Poll>(pollRepository.getPollsByTitle(title));
+
+        return poolList;
+    }
     public void deletePollById(Long id) {pollRepository.deletePollById(id);};
 
 }

@@ -6,9 +6,8 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "User", uniqueConstraints = {
-        @UniqueConstraint(name = "uc_user_username", columnNames = {"username"}),
-        @UniqueConstraint(name = "uc_user_email", columnNames = {"email"}),
-        @UniqueConstraint(name = "uc_user_password", columnNames = {"password"})
+        @UniqueConstraint(name = "uc_user_name", columnNames = {"name", "password"}),
+        @UniqueConstraint(name = "uc_user_email", columnNames = {"email"})
 })
 public class User implements Serializable {
 
@@ -18,7 +17,7 @@ public class User implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private String username;
+    private String name;
 
     @Column(nullable = false)
     private String password;
@@ -33,8 +32,8 @@ public class User implements Serializable {
 
     }
 
-    public User(String username, String password, String email) {
-        this.username = username;
+    public User(String name, String password, String email) {
+        this.name = name;
         this.password = password;
         this.email = email;
     }
@@ -46,12 +45,12 @@ public class User implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    public String getUsername() {
-        return username;
+    public String getName() {
+        return name;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getPassword() {
@@ -81,7 +80,7 @@ public class User implements Serializable {
     @Override
     public String toString() {
         return "User{" +
-                "username='" + username + '\'' +
+                "name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

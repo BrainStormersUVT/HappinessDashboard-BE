@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Date;
 
 @RestController
 @RequestMapping("/vote")
@@ -38,6 +39,15 @@ public class VoteResource {
     {
         Collection<Vote> voteCollection = voteService.findVotesByPollId(poolId);
         return new ResponseEntity<Collection<Vote>>(voteCollection, HttpStatus.OK);
+    }
+
+    @GetMapping("/find/{poolId}/{startDate}/{endDate}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Collection<Long>> getPoolVotesWithingGivenTime(@PathVariable("poolId")Long poolId,
+                                                                         @PathVariable("startDate") Date startDate,
+                                                                         @PathVariable("endDate") Date endDate){
+        Collection<Long> voteCollection = voteService.getPoolVotesWithingGivenTime(poolId, startDate, endDate);
+        return new ResponseEntity<Collection<Long>>(voteCollection, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

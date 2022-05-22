@@ -6,6 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Optional;
+
 @RestController
 @RequestMapping("/user")
 public class UserResource {
@@ -33,10 +35,10 @@ public class UserResource {
 
     @GetMapping("/find/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<User> findUserById(@PathVariable("id") Long id)
+    public ResponseEntity<Long> findUserById(@PathVariable("id") Long id)
     {
-        User user = userService.findUserById(id);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
+        Long userId = userService.findUserById(id);
+        return new ResponseEntity<Long>(userId, HttpStatus.OK);
     }
 
     @GetMapping("/find/{username}")
@@ -53,6 +55,14 @@ public class UserResource {
     {
         String password = userService.findPasswordByUsername(username);
         return new ResponseEntity<String>(password, HttpStatus.OK);
+    }
+
+    @GetMapping("/checkIfUserVoted/{idPoll}/{username}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Boolean> checkIfUserVoted(@PathVariable("idPoll")Integer idPoll,@PathVariable("username") String username)
+    {
+        Boolean voted = userService.checkIfUserVoted(idPoll, username);
+        return new ResponseEntity<Boolean>(voted, HttpStatus.OK);
     }
 
     @DeleteMapping("/delete/{id}")

@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
@@ -19,9 +20,9 @@ public class PollResource {
 
     @PostMapping("/add")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Poll> addPoll(@RequestBody Poll poll) {
+    public ResponseEntity<Integer> addPoll(@RequestBody Poll poll) {
         Poll newPoll= pollService.addPoll(poll);
-        return new ResponseEntity<Poll>(newPoll, HttpStatus.CREATED);
+        return new ResponseEntity<Integer>(Math.toIntExact(newPoll.getId()), HttpStatus.CREATED);
     }
 
     @PutMapping("/update")
@@ -60,6 +61,22 @@ public class PollResource {
     public ResponseEntity<?> deletePollById(@PathVariable("id") Long id) {
         pollService.deletePollById(id);
         return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    @GetMapping("/getPolls/{username}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public  ResponseEntity<Collection<Poll>> getPollsByUsername(@PathVariable("username")String username)
+    {
+        Collection<Poll> pollCollection = pollService.getPollsByUsername(username);
+        return new ResponseEntity<Collection<Poll>>(pollCollection, HttpStatus.OK);
+    }
+
+    @GetMapping("/getPollsWithTitleLike/{title}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Collection<Poll>> getPollsByTitle(@PathVariable("title")String title)
+    {
+        Collection<Poll> pollCollection = pollService.getPollsByTitle(title);
+        return new ResponseEntity<Collection<Poll>>(pollCollection, HttpStatus.OK);
     }
 
 }
