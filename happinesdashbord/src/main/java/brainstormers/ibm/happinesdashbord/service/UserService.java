@@ -3,19 +3,16 @@ package brainstormers.ibm.happinesdashbord.service;
 import brainstormers.ibm.happinesdashbord.exception.UserNotFoundExcepiton;
 import brainstormers.ibm.happinesdashbord.model.User;
 import brainstormers.ibm.happinesdashbord.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class UserService {
     private final UserRepository userRepository;
-
-    @Autowired
-    public UserService(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
 
 
     public User addUser(User user) {return userRepository.save(user);}
@@ -25,12 +22,12 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public Long findUserById(Long id)
+    public User findUserById(Long id)
     {
-        if(userRepository.findUserById(id).isPresent())
-            return id;
-        else
-            return -1L;
+       return userRepository.findUserById(id)
+               .orElseThrow(() ->
+                    new UserNotFoundExcepiton
+                       ("User with id: " + id + " was not found."));
     }
 
     public User findUserByUsername(String username)

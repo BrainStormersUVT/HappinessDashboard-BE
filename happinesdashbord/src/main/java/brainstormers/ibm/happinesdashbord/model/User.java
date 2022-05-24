@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "User", uniqueConstraints = {
-        @UniqueConstraint(name = "uc_user_name", columnNames = {"name", "password"}),
+        @UniqueConstraint(name = "uc_user_name", columnNames = {"username", "password"}),
         @UniqueConstraint(name = "uc_user_email", columnNames = {"email"})
 })
 public class User implements Serializable {
@@ -17,7 +17,7 @@ public class User implements Serializable {
     private Long id;
 
     @Column(nullable = false)
-    private String name;
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -25,15 +25,13 @@ public class User implements Serializable {
     @Column(nullable = false)
     private String email;
 
-    @OneToMany(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "creator")
-    private List<Poll> pollList;
 
     public User() {
 
     }
 
-    public User(String name, String password, String email) {
-        this.name = name;
+    public User(String username, String password, String email) {
+        this.username = username;
         this.password = password;
         this.email = email;
     }
@@ -46,11 +44,11 @@ public class User implements Serializable {
         this.id = id;
     }
     public String getName() {
-        return name;
+        return username;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.username = name;
     }
 
     public String getPassword() {
@@ -69,18 +67,11 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public List<Poll> getPollList() {
-        return pollList;
-    }
-
-    public void setPollList(List<Poll> pollList) {
-        this.pollList = pollList;
-    }
 
     @Override
     public String toString() {
         return "User{" +
-                "name='" + name + '\'' +
+                "name='" + username + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

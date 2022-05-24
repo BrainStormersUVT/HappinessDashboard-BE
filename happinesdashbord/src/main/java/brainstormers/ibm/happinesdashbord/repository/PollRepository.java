@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface PollRepository extends JpaRepository<Poll, Long> {
 
     @Query(
-            value = "SELECT * FROM Poll ORDER BY date DESC",
+            value = "SELECT  * FROM Poll ORDER BY date DESC",
             nativeQuery = true)
     Collection<Poll> findAllPools();
 
@@ -24,11 +24,12 @@ public interface PollRepository extends JpaRepository<Poll, Long> {
     @Query(
             value = "SELECT p FROM Poll p LEFT JOIN User u"+
                     "ON p.creator_id = u.id " +
-                    "WHERE u.name = :username ORDER BY date DESC")
+                    "WHERE u.name = :username ORDER BY date DESC",
+            nativeQuery = true)
     Collection<Poll> findPoolsByUsername(@Param("username")String username);
 
     @Query(
-            value = "SELECT * FROM Poll WHERE title like :title",
+            value = "SELECT DISTINCT * FROM Poll WHERE title like :title",
             nativeQuery = true)
     Collection<Poll> getPollsByTitle(@Param("title")String title);
 }

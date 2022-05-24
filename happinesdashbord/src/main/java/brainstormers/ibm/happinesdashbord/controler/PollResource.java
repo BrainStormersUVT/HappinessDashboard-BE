@@ -1,33 +1,36 @@
 package brainstormers.ibm.happinesdashbord.controler;
 
 import brainstormers.ibm.happinesdashbord.model.Poll;
+import brainstormers.ibm.happinesdashbord.model.User;
 import brainstormers.ibm.happinesdashbord.service.PollService;
+import brainstormers.ibm.happinesdashbord.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.Collection;
 
 @RestController
 @RequestMapping("/poll")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class PollResource {
     private final PollService pollService;
+    private final UserService userService;
 
-    public PollResource(PollService pollService) {
-        this.pollService = pollService;
+    @PostMapping("/add/{userId}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Poll> addPoll(@RequestBody Poll poll, @PathVariable("userId") Long userId) {
+        poll.setCreator(userService.findUserById(userId));
+        Poll newPoll = pollService.addPoll(poll);
+        return new ResponseEntity<Poll>(newPoll, HttpStatus.CREATED);
     }
 
-    @PostMapping("/add")
+    @PutMapping("/update/{userId}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Integer> addPoll(@RequestBody Poll poll) {
-        Poll newPoll= pollService.addPoll(poll);
-        return new ResponseEntity<Integer>(Math.toIntExact(newPoll.getId()), HttpStatus.CREATED);
-    }
-
-    @PutMapping("/update")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Poll> updatePoll(@RequestBody Poll poll) {
+    public ResponseEntity<Poll> updatePoll(@RequestBody Poll poll, @PathVariable("userId") Long userId) {
+        poll.setCreator( userService.findUserById(userId));
         Poll updatePoll = pollService.updatePoll(poll);
         return new ResponseEntity<Poll>(updatePoll, HttpStatus.OK);
     }

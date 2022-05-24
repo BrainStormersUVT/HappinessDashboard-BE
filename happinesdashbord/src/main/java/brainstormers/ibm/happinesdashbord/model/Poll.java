@@ -1,5 +1,9 @@
 package brainstormers.ibm.happinesdashbord.model;
 
+import brainstormers.ibm.happinesdashbord.repository.UserRepository;
+import brainstormers.ibm.happinesdashbord.service.UserService;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.Date;
@@ -25,10 +29,8 @@ public class Poll implements Serializable {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade =  CascadeType.ALL)
     @JoinColumn(name = "creator_id")
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
     private User creator;
-
-    @OneToMany(fetch = FetchType.LAZY, cascade =  CascadeType.ALL, mappedBy = "poll")
-    private List<Vote> voteList;
 
     public Poll() {
 
@@ -79,14 +81,6 @@ public class Poll implements Serializable {
 
     public void setCreator(User creator) {
         this.creator = creator;
-    }
-
-    public List<Vote> getVoteList() {
-        return voteList;
-    }
-
-    public void setVoteList(List<Vote> voteList) {
-        this.voteList = voteList;
     }
 
     @Override

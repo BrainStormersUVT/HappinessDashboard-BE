@@ -2,6 +2,8 @@ package brainstormers.ibm.happinesdashbord.controler;
 
 import brainstormers.ibm.happinesdashbord.model.User;
 import brainstormers.ibm.happinesdashbord.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,12 +12,10 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/user")
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class UserResource {
     private final UserService userService;
 
-    public UserResource(UserService userService) {
-        this.userService = userService;
-    }
 
     @PostMapping("/add")
     @CrossOrigin(origins = "http://localhost:4200")
@@ -33,12 +33,12 @@ public class UserResource {
         return new ResponseEntity<User>(updatedUser, HttpStatus.OK);
     }
 
-    @GetMapping("/find/{id}")
+    @GetMapping("/findById/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Long> findUserById(@PathVariable("id") Long id)
+    public ResponseEntity<User> findUserById(@PathVariable("id") Long id)
     {
-        Long userId = userService.findUserById(id);
-        return new ResponseEntity<Long>(userId, HttpStatus.OK);
+        User userId = userService.findUserById(id);
+        return new ResponseEntity<User>(userId, HttpStatus.OK);
     }
 
     @GetMapping("/find/{username}")

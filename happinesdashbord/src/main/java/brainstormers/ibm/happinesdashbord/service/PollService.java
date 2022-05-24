@@ -3,18 +3,17 @@ package brainstormers.ibm.happinesdashbord.service;
 import brainstormers.ibm.happinesdashbord.exception.PollNotFoundException;
 import brainstormers.ibm.happinesdashbord.model.Poll;
 import brainstormers.ibm.happinesdashbord.repository.PollRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Service
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class PollService {
     private final PollRepository pollRepository;
-
-    public PollService(PollRepository pollRepository) {
-        this.pollRepository = pollRepository;
-    }
 
     public Poll addPoll(Poll poll) { return pollRepository.save(poll);}
 

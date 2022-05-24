@@ -2,18 +2,18 @@ package brainstormers.ibm.happinesdashbord.service;
 
 import brainstormers.ibm.happinesdashbord.model.Vote;
 import brainstormers.ibm.happinesdashbord.repository.VoteRepository;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
 import java.util.Date;
 
 @Service
+@RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class VoteService {
     private final VoteRepository voteRepository;
 
-    public VoteService(VoteRepository voteRepository) {
-        this.voteRepository = voteRepository;
-    }
 
     public Vote addVote(Vote vote) {return voteRepository.save(vote);}
 
