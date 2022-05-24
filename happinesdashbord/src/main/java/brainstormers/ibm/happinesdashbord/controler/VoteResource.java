@@ -26,7 +26,7 @@ public class VoteResource {
     @PostMapping("/add/{userId}/{pollId}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Vote> addVote(@RequestBody Vote vote,
-                                        @PathVariable("poolId") Long poolId, @PathVariable("userId") Long userId) {
+                                        @PathVariable("pollId") Long poolId, @PathVariable("userId") Long userId) {
         vote.setUser(userService.findUserById(userId));
         vote.setPoll(pollService.findPollById(poolId));
         Vote newVote = voteService.addVote(vote);
@@ -37,7 +37,7 @@ public class VoteResource {
     @PutMapping("/update/{userId}/{pollId}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Vote> updateVote(@RequestBody Vote vote,
-                                           @PathVariable("poolId") Long poolId, @PathVariable("userId") Long userId) {
+                                           @PathVariable("pollId") Long poolId, @PathVariable("userId") Long userId) {
         vote.setUser(userService.findUserById(userId));
         vote.setPoll(pollService.findPollById(poolId));
         Vote updatedVote = voteService.updateVote(vote);
@@ -52,9 +52,9 @@ public class VoteResource {
         return new ResponseEntity<Collection<Vote>>(voteCollection, HttpStatus.OK);
     }
 
-    @GetMapping("/find/{poolId}/{startDate}/{endDate}")
+    @GetMapping("/find/{pollId}/{startDate}/{endDate}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Collection<Long>> getPoolVotesWithingGivenTime(@PathVariable("poolId")Long poolId,
+    public ResponseEntity<Collection<Long>> getPoolVotesWithingGivenTime(@PathVariable("pollId")Long poolId,
                                                                          @PathVariable("startDate") Date startDate,
                                                                          @PathVariable("endDate") Date endDate){
         Collection<Long> voteCollection = voteService.getPoolVotesWithingGivenTime(poolId, startDate, endDate);

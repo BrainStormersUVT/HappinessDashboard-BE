@@ -33,30 +33,6 @@ public class UserResource {
         return new ResponseEntity<User>(updatedUser, HttpStatus.OK);
     }
 
-    @GetMapping("/findById/{id}")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<User> findUserById(@PathVariable("id") Long id)
-    {
-        User userId = userService.findUserById(id);
-        return new ResponseEntity<User>(userId, HttpStatus.OK);
-    }
-
-    @GetMapping("/find/{username}")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<User> findUserByUsername(@PathVariable("username") String username)
-    {
-        User user =   userService.findUserByUsername(username);
-        return new ResponseEntity<User>(user, HttpStatus.OK);
-    }
-
-    @GetMapping("/find/{username}/password")
-    @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<String> findPasswordByUsername(@PathVariable("username") String username)
-    {
-        String password = userService.findPasswordByUsername(username);
-        return new ResponseEntity<String>(password, HttpStatus.OK);
-    }
-
     @GetMapping("/checkIfUserVoted/{idPoll}/{username}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Boolean> checkIfUserVoted(@PathVariable("idPoll")Integer idPoll,@PathVariable("username") String username)
@@ -65,6 +41,12 @@ public class UserResource {
         return new ResponseEntity<Boolean>(voted, HttpStatus.OK);
     }
 
+    @GetMapping("/checkIfUserExists/{username}/{password}")
+    public ResponseEntity<Boolean> checkIfUserExist(@PathVariable String password, @PathVariable String username){
+        Boolean exists = userService.checkIfUserExists(password, username);
+        return new ResponseEntity<>(exists, HttpStatus.OK);
+
+    }
     @DeleteMapping("/delete/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id)

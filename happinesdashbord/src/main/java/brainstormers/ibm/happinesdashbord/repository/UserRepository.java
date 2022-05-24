@@ -19,7 +19,12 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(
             value = "SELECT * FROM User u LEFT JOIN Vote v ON u.id = v.user_id " +
-                    "WHERE u.name = :username AND v.poll_id = :idPoll",
+                    "WHERE u.username = :username AND v.poll_id = :idPoll",
             nativeQuery = true)
     Optional<User> checkIfUserVoted(@Param("idPoll")Integer idPoll,@Param("username") String username);
+
+    @Query(
+            value = "SELECT * FROM User u WHERE u.username=:username AND u.password=:password",
+            nativeQuery = true)
+    Optional<User> checkIfUserExists(String password, String username);
 }

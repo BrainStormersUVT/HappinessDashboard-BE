@@ -4,7 +4,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 @Entity
 @Table(name = "Vote", uniqueConstraints = {
@@ -46,8 +48,8 @@ public class Vote implements Serializable {
         this.poll = poll;
     }
 
-    public Poll getPoll() {
-        return poll;
+   public Long getPoll() {
+       return poll.getId();
     }
 
     public Long getId() {
@@ -74,15 +76,17 @@ public class Vote implements Serializable {
         this.comment = comment;
     }
 
-    public Date getDatetime() {
-        return datetime;
+    public String getDatetime() {
+        Locale locale=new Locale("en", "GB");
+        DateFormat dateFormat=DateFormat.getDateInstance(DateFormat.DEFAULT, locale);
+        return dateFormat.format(datetime);
     }
 
     public void setDatetime(Date datetime) {
         this.datetime = datetime;
     }
 
-    public User getUser() { return user; }
+    public String getUser() { return user.getName(); }
 
     public void setUser(User user) { this.user = user; }
 

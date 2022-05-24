@@ -21,10 +21,10 @@ public class PollResource {
 
     @PostMapping("/add/{userId}")
     @CrossOrigin(origins = "http://localhost:4200")
-    public ResponseEntity<Poll> addPoll(@RequestBody Poll poll, @PathVariable("userId") Long userId) {
+    public ResponseEntity<Long> addPoll(@RequestBody Poll poll, @PathVariable("userId") Long userId) {
         poll.setCreator(userService.findUserById(userId));
         Poll newPoll = pollService.addPoll(poll);
-        return new ResponseEntity<Poll>(newPoll, HttpStatus.CREATED);
+        return new ResponseEntity<>(newPoll.getId(), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{userId}")

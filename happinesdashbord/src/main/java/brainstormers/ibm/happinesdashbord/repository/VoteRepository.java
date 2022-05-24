@@ -19,8 +19,8 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     @Query(
             value = "SELECT id FROM Vote " +
-                    "WHERE poll_id = :poolId AND datetime BETWEEN :startDate AND :endDate " +
+                    "WHERE poll_id = ?1 AND datetime BETWEEN ?2 AND ?3 " +
                     "ORDER BY datetime DESC",
             nativeQuery = true)
-    Collection<Long> getPoolVotesWithingGivenTime(@Param("poolId")Long poolId,@Param("startDate") Date startDate,@Param("endDate") Date endDate);
+    Collection<Long> getPoolVotesWithingGivenTime(Long poolId, Date startDate, Date endDate);
 }

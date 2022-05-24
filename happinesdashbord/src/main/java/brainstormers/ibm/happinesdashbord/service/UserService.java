@@ -61,4 +61,14 @@ public class UserService {
     {
         userRepository.deleteUserById(id);
     }
+
+    public Boolean checkIfUserExists(String password, String username) {
+        Optional<User> user= userRepository.checkIfUserExists(password, username);
+        if(user.isPresent()){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }
