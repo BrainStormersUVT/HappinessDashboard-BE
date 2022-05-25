@@ -61,6 +61,13 @@ public class VoteResource {
         return new ResponseEntity<Collection<Long>>(voteCollection, HttpStatus.OK);
     }
 
+    @GetMapping("/{poolId}/getGrades")
+    public ResponseEntity<Collection<Long>> getListOfGrades(@PathVariable("poolId")Long poolId)
+    {
+        Collection<Long> gradeList = voteService.getListOfGrades(poolId);
+        return new ResponseEntity<Collection<Long>>(gradeList , HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> deleteVoteById(@PathVariable("id")Long id) {
