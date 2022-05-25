@@ -41,12 +41,19 @@ public class UserResource {
         return new ResponseEntity<Boolean>(voted, HttpStatus.OK);
     }
 
-    @GetMapping("/checkIfUserExists/{username}/{password}")
-    public ResponseEntity<Boolean> checkIfUserExist(@PathVariable String password, @PathVariable String username){
-        Boolean exists = userService.checkIfUserExists(password, username);
-        return new ResponseEntity<>(exists, HttpStatus.OK);
-
+    @GetMapping("/checkIfUserIsCreator/{idPoll}/{username}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<Boolean> checkIfUserIsCreator(@PathVariable Integer idPoll, @PathVariable String username){
+        Boolean created=userService.checkIfUserIsCreator(idPoll, username);
+        return new ResponseEntity<>(created, HttpStatus.OK);
     }
+    @GetMapping("/checkIfUserExists/{username}/{password}")
+    @CrossOrigin(origins = "http://localhost:4200")
+    public ResponseEntity<User> checkIfUserExist(@PathVariable String password, @PathVariable String username){
+        User user = userService.checkIfUserExists(password, username);
+        return new ResponseEntity<>(user, HttpStatus.OK);
+    }
+
     @DeleteMapping("/delete/{id}")
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<?> deleteUser(@PathVariable("id") Long id)

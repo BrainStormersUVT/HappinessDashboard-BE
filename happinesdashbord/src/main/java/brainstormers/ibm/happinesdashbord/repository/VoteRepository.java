@@ -11,9 +11,9 @@ import java.util.Date;
 public interface VoteRepository extends JpaRepository<Vote, Long> {
 
     @Query(
-            value = "SELECT * FROM Vote WHERE poll_id = :poolId ORDER BY datetime DESC",
+            value = "SELECT * FROM Vote WHERE poll_id = :pollId ORDER BY datetime DESC",
             nativeQuery = true)
-    Collection<Vote> findVoteByPollId(@Param("poolId") Long poolId);
+    Collection<Vote> findVoteByPollId(@Param("poolId") Long pollId);
 
     void deleteVoteById(Long id);
 

@@ -27,4 +27,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
             value = "SELECT * FROM User u WHERE u.username=:username AND u.password=:password",
             nativeQuery = true)
     Optional<User> checkIfUserExists(String password, String username);
+
+    @Query(value = "SELECT * FROM User u LEFT JOIN Poll p on u.id=p.creator_id WHERE u.username=:username AND  p.id=:idPoll",
+            nativeQuery = true)
+    Optional<User> checkIfUserIsCreator(@Param("idPoll") Integer idPoll, @Param("username") String username);
 }
