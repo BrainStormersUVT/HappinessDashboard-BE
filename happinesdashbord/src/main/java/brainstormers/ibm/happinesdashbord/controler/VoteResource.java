@@ -27,10 +27,15 @@ public class VoteResource {
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Vote> addVote(@RequestBody Vote vote,
                                         @PathVariable("pollId") Long poolId, @PathVariable("userId") Long userId) {
-        vote.setUser(userService.findUserById(userId));
-        vote.setPoll(pollService.findPollById(poolId));
+        User user = userService.findUserById(userId);
+        Poll poll = pollService.findPollById(poolId);
+        vote.setUser(user);
+        vote.setPoll(poll);
         Vote newVote = voteService.addVote(vote);
-
+        if(user.getId() == -1l || poll.getId() == -1l)
+        {
+            newVote.setId(-1l);
+        }
         return new ResponseEntity<Vote>(newVote, HttpStatus.CREATED);
     }
 
@@ -38,8 +43,6 @@ public class VoteResource {
     @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Vote> updateVote(@RequestBody Vote vote,
                                            @PathVariable("pollId") Long poolId, @PathVariable("userId") Long userId) {
-        vote.setUser(userService.findUserById(userId));
-        vote.setPoll(pollService.findPollById(poolId));
         Vote updatedVote = voteService.updateVote(vote);
         return new ResponseEntity<Vote>(updatedVote, HttpStatus.OK);
     }
