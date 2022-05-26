@@ -13,7 +13,7 @@ public interface VoteRepository extends JpaRepository<Vote, Long> {
     @Query(
             value = "SELECT * FROM Vote WHERE poll_id = :pollId ORDER BY datetime DESC",
             nativeQuery = true)
-    Collection<Vote> findVoteByPollId(@Param("poolId") Long pollId);
+    Collection<Vote> findVoteByPollId(@Param("pollId") Long pollId);
 
     void deleteVoteById(Long id);
 
