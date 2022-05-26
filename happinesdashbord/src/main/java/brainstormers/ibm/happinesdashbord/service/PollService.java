@@ -9,22 +9,31 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor(onConstructor_ = @Autowired)
 public class PollService {
     private final PollRepository pollRepository;
 
+    private static Poll pollDummy;
+
+    static
+    {
+        pollDummy = new Poll();
+        pollDummy.setId(-1l);
+    }
     public Poll addPoll(Poll poll) { return pollRepository.save(poll);}
 
     public Poll updatePoll(Poll poll) {return pollRepository.save(poll);};
 
     public Poll findPollById(Long id)
     {
-        return pollRepository.findPollById(id)
-                .orElseThrow(() ->
-                        new PollNotFoundException
-                                ( "Poll with id: " + id + " was not found."));
+        Optional<Poll> rez =  pollRepository.findPollById(id);
+        if(rez.isPresent())
+            return rez.get();
+        else
+            return pollDummy;
     }
 
     public Collection<Poll> getListOfPools()

@@ -14,6 +14,13 @@ import java.util.Optional;
 public class UserService {
     private final UserRepository userRepository;
 
+    private static User userDummy;
+
+    static
+    {
+        userDummy = new User();
+        userDummy.setId(-1l);
+    }
 
     public User addUser(User user) {return userRepository.save(user);}
 
@@ -24,18 +31,22 @@ public class UserService {
 
     public User findUserById(Long id)
     {
-       return userRepository.findUserById(id)
-               .orElseThrow(() ->
-                    new UserNotFoundExcepiton
-                       ("User with id: " + id + " was not found."));
+        Optional<User> rez = userRepository.findUserById(id);
+
+        if(rez.isPresent())
+            return rez.get();
+        else
+            return userDummy;
     }
 
     public User findUserByUsername(String username)
     {
-        return userRepository.findUserByUsername(username)
-                .orElseThrow(() ->
-                        new UserNotFoundExcepiton
-                                ("User with username: " + username + " was not found."));
+        Optional<User> rez = userRepository.findUserByUsername(username);
+
+        if(rez.isPresent())
+            return rez.get();
+        else
+            return userDummy;
     }
 
     public Boolean checkIfUserVoted(Integer idPoll, String username)
