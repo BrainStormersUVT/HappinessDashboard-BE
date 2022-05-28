@@ -50,17 +50,16 @@ public class PollService {
 
     public Collection<Poll> getPollsByUsername(String username)
     {
-        ArrayList<Poll> poolList = new ArrayList<Poll>(pollRepository.findPoolsByUsername(username));
+        ArrayList<Poll> pollList = new ArrayList<Poll>(pollRepository.findPoolsByUsername(username));
 
-        return poolList;
+        return pollList;
     }
 
     public Collection<Poll> getPollsByTitle(String title)
     {
-        ArrayList<Poll> poolList = new ArrayList<Poll>(pollRepository.getPollsByTitle(title));
-
-        return poolList;
+        ArrayList<Poll> pollList = new ArrayList<>(pollRepository.getPollsByTitle(title));
+        return pollList;
     }
-    public void deletePollById(Long id) {pollRepository.deletePollById(id);};
+    public void deletePollById(Long id) {pollRepository.deletePollById(id);}
 
 }

@@ -22,14 +22,14 @@ public interface PollRepository extends JpaRepository<Poll, Long> {
     void deletePollById(Long id);
 
     @Query(
-            value = "SELECT p FROM Poll p LEFT JOIN User u"+
+            value = "SELECT * FROM Poll p LEFT JOIN User u "+
                     "ON p.creator_id = u.id " +
-                    "WHERE u.name = :username ORDER BY date DESC",
+                    "WHERE u.username = :username ORDER BY date DESC",
             nativeQuery = true)
     Collection<Poll> findPoolsByUsername(@Param("username")String username);
 
     @Query(
-            value = "SELECT DISTINCT * FROM Poll WHERE title like :title",
+            value = "SELECT * FROM Poll p WHERE p.title LIKE %:title%",
             nativeQuery = true)
     Collection<Poll> getPollsByTitle(@Param("title")String title);
 }

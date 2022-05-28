@@ -65,6 +65,7 @@ public class VoteResource {
     }
 
     @GetMapping("/{poolId}/getGrades")
+    @CrossOrigin(origins = "http://localhost:4200")
     public ResponseEntity<Collection<Long>> getListOfGrades(@PathVariable("poolId")Long poolId)
     {
         Collection<Long> gradeList = voteService.getListOfGrades(poolId);
